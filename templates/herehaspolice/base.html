@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+{% load bootstrap3 %}
+
+<html>
+  <head>
+    <title>這裡有警察！！</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 450px;
+      }
+    </style>
+  </head>
+  <body>
+  
+    <div align=center><strong>Policessssss</strong></div>
+    <div id="map"></div>
+    <form role="form" method="post" id="form">
+        {% csrf_token %}
+        <div align=center><input type="submit" class="btn btn-primary" value="共享警察位置" /></div>
+    </form>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&signed_in=true"
+        async defer>
+    </script>
+    
+    <script>
+        $(document).ready(function(){
+            initMap();
+            $("#form").submit(function(eventObj){
+                $('<input />').attr('type', 'hidden')
+                  .attr('name', "lat")
+                  .attr('value', lat)
+                  .appendTo('#form');
+
+                $('<input />').attr('type', 'hidden')
+                  .attr('name', "lon")
+                  .attr('value', long)
+                  .appendTo('#form');
+                  
+                $('<input />').attr('type', 'hidden')
+                  .attr('name', "text")
+                  .attr('value', text)
+                  .appendTo('#form');
+
+                return true;
+            });
+            
+        });
+    </script>
+    
+    
+    <script>
+    var lat;
+    var long;
+    var text;
+    
+    function initMap() {
+      // Try HTML5 geolocation.
+      if (navigator.geolocation) {
+          var positionOptions = {
+            enableHighAccuracy: true,
+            timeout: 10 * 1000 // 10 seconds
+          };
+          
+          navigator.geolocation.getCurrentPosition(function(position) {
+              lat = position.coords.latitude;
+              long = position.coords.longitude;
+
+              var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+              
+              var options = {
+                zoom: 15,
+                center: coords,
+                mapTypeControl: false,
+                navigationControlOptions: {
+                    style: google.maps.NavigationControlStyle.SMALL
+                },
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+              };
+              var map = new google.maps.Map(document.getElementById("map"), options);
+
+              var marker = new google.maps.Marker({
+                  position: coords,
+                  
+                  title:"You are here!",
+                  animation:google.maps.Animation.BOUNCE
+              });
+              marker.setMap(map)
+          });
+      } else {
+          error('Geo Location is not supported');
+      }
+    }
+    
+    </script>
+  </body>
+</html>
