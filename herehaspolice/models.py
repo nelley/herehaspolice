@@ -11,7 +11,7 @@ class GeoInfo(models.Model):
     lon = models.FloatField(verbose_name=_('Longitude:'),
                                    help_text=_('Please input Longitude'))
     
-    datetime_added = models.DateTimeField(null=False, default=timezone.now())
+    datetime_added = models.DateTimeField(null=False, default=timezone.now)
     
     text = models.CharField(max_length=40, 
                                 verbose_name=_('Free command:'),

@@ -1,57 +1,113 @@
 <!DOCTYPE html>
-{% load bootstrap3 %}
+{% load staticfiles %}
 
-<html>
+<html lang="en">
   <head>
-    <title>這裡有警察！！</title>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <meta charset="utf-8">
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 450px;
-      }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="themes/assets/ico/favicon.ico">
+    <title>Bootstrappage.com free templates</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href={% static "herehaspolice/css/bootstrap.min.css" %} rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="themes/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href={% static "herehaspolice/css/carousel.css" %} rel="stylesheet">
   </head>
+<!-- NAVBAR
+================================================== -->
   <body>
-  
-    <div align=center><strong>Policessssss</strong></div>
-    <div id="map"></div>
-    <form role="form" method="post" id="form">
-        {% csrf_token %}
-        <div align=center><input type="submit" class="btn btn-primary" value="共享警察位置" /></div>
-    </form>
-    
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&signed_in=true"
-        async defer>
-    </script>
-    
+    <div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="index.html">這裡有警察</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <!--<li class="active"><a href="index.html">首頁</a></li>-->
+                <li><a href="about.html">關於我們</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Carousel
+    ================================================== -->
+    <div id="mainCarousel">
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+            <script type="text/javascript"
+                src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBNK_a0zq0xJyFjwih1qv9gBFbrFJO_hpw">
+            </script>
+            <script type="text/javascript" >
+                var locs_list = "{{locs_json}}";
+                var cleaned_locs = JSON.parse(locs_list.replace(/&quot;/g, "\""));
+            </script>
+          
     <script>
         $(document).ready(function(){
+
             initMap();
+            
+            //get geolocation
+            
+            
             $("#form").submit(function(eventObj){
-                $('<input />').attr('type', 'hidden')
-                  .attr('name', "lat")
-                  .attr('value', lat)
-                  .appendTo('#form');
-
-                $('<input />').attr('type', 'hidden')
-                  .attr('name', "lon")
-                  .attr('value', long)
-                  .appendTo('#form');
-                  
-                $('<input />').attr('type', 'hidden')
-                  .attr('name', "text")
-                  .attr('value', text)
-                  .appendTo('#form');
-
-                return true;
+                if (typeof lat === 'string' || lat instanceof String){
+                    return false
+                }else{
+                    alert(lat)
+                    alert(long)
+                    $('<input />').attr('type', 'hidden')
+                      .attr('name', "lat")
+                      .attr('value', lat)
+                      .appendTo('#form');
+    
+                    $('<input />').attr('type', 'hidden')
+                      .attr('name', "lon")
+                      .attr('value', long)
+                      .appendTo('#form');
+                      
+                    $('<input />').attr('type', 'hidden')
+                      .attr('name', "text")
+                      .attr('value', text)
+                      .appendTo('#form');
+    
+                    return true;
+                }
             });
             
         });
@@ -59,48 +115,120 @@
     
     
     <script>
-    var lat;
-    var long;
-    var text;
-    
-    function initMap() {
-      // Try HTML5 geolocation.
-      if (navigator.geolocation) {
-          var positionOptions = {
-            enableHighAccuracy: true,
-            timeout: 10 * 1000 // 10 seconds
-          };
-          
-          navigator.geolocation.getCurrentPosition(function(position) {
-              lat = position.coords.latitude;
-              long = position.coords.longitude;
-
-              var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-              
-              var options = {
-                zoom: 15,
-                center: coords,
-                mapTypeControl: false,
-                navigationControlOptions: {
-                    style: google.maps.NavigationControlStyle.SMALL
-                },
-                mapTypeId: google.maps.MapTypeId.ROADMAP
-              };
-              var map = new google.maps.Map(document.getElementById("map"), options);
-
-              var marker = new google.maps.Marker({
-                  position: coords,
+        var lat;
+        var long;
+        var text;
+        var map;
+        
+        function setMarkers(map,locations){
+            var marker, i
+            for (i = 0; i < locations.length; i++){
+                var tlat = locations[i][0]
+                var tlong = locations[i][1]
+                
+                var dt =  new Date(locations[i][2])
+                
+                var date = new Date(); 
+                var currentTimestamp = date.getTime();
+                
+                var hourDiff = currentTimestamp - dt; //in ms
+                
+                var minDiff = hourDiff / 60 / 1000; //in minutes
+                var hDiff = hourDiff / 3600 / 1000; //in hours
+                
+                var humanReadable = {};
+                humanReadable.hours = Math.floor(hDiff);
+                humanReadable.minutes = Math.floor(minDiff - 60 * humanReadable.hours);
+                
+                
+                latlngset = new google.maps.LatLng(tlat, tlong);
+                
+                var marker = new google.maps.Marker({
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                    map: map, 
+                    title: "test" , 
+                    position: latlngset
+                });
+                map.setCenter(marker.getPosition())
+        
+                var content = humanReadable.hours + "小時" + humanReadable.minutes + "分前有警察！！"
+        
+                var infowindow = new google.maps.InfoWindow()
+        
+                google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                    return function() {
+                        infowindow.setContent(content);
+                        infowindow.open(map,marker);
+                    };
+                })(marker,content,infowindow)); 
+            }
+            
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                alert('使用本服務前需要打開GPS,\n且要同意分享當前位置的資訊喔')
+                navigator.geolocation.getCurrentPosition(function(position) {
+                  lat = position.coords.latitude;
+                  long = position.coords.longitude;
                   
-                  title:"You are here!",
-                  animation:google.maps.Animation.BOUNCE
-              });
-              marker.setMap(map)
-          });
-      } else {
-          error('Geo Location is not supported');
-      }
-    }
-    
+                  var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                  
+                  var marker = new google.maps.Marker({
+                      position: coords,
+                      map: map,
+                      title: 'Hello World!',
+                      animation:google.maps.Animation.BOUNCE
+                  });
+                  map.setCenter(marker.getPosition())
+                });
+            } else {
+                alert('您現在使用的瀏覽器無法使用本服務')
+            }
+            
+        }
+        
+        function initMap() {
+            var myOptions = {
+                center: new google.maps.LatLng(35.743580, 139.730338),// no effect
+                zoom: 18,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
+            setMarkers(map, cleaned_locs)
+        }
+        
     </script>
+            
+          
+            <div id="googleMap" style="height:450px;"></div>
+              <div class="container">
+                <div class="carousel-caption">
+                
+                <form role="form" method="post" id="form">
+                    {% csrf_token %}
+                    <a><input class="btn btn-lg btn-danger" role="button" style="font-size:2em" type="submit" value="這裡有警察！！" /></a>
+                </form>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /.carousel -->
+    </div>
+    
+      <!-- FOOTER 
+      <footer>
+        <div class="container">
+        <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        </div>
+      </footer>-->
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="{% static "herehaspolice/js/holder.js" %}></script>
   </body>
 </html>
