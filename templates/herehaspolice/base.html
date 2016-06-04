@@ -25,6 +25,7 @@
 
     <!-- Custom styles for this template -->
     <link href={% static "herehaspolice/css/carousel.css" %} rel="stylesheet">
+    
   </head>
 <!-- NAVBAR
 ================================================== -->
@@ -70,6 +71,9 @@
         <div class="item active">
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
             <script type="text/javascript"
+                src="{% static "herehaspolice/js/utility.js" %}">
+            </script>
+            <script type="text/javascript"
                 src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBNK_a0zq0xJyFjwih1qv9gBFbrFJO_hpw">
             </script>
             <script type="text/javascript" >
@@ -79,18 +83,16 @@
           
     <script>
         $(document).ready(function(){
-
-            initMap();
+            var std = whichBrowser()
+            initMap(std);
             
             //get geolocation
             
-            
             $("#form").submit(function(eventObj){
-                if (typeof lat === 'string' || lat instanceof String){
+                if (typeof lat === 'string' || lat instanceof String || std=="C"){
+                    alert("Chrome不讓我們讀取您的位置,所以您無法告訴大家警察在哪裡喔....\n換其他瀏覽器（如：FireFox）的話就可以使用本服務囉")
                     return false
                 }else{
-                    alert(lat)
-                    alert(long)
                     $('<input />').attr('type', 'hidden')
                       .attr('name', "lat")
                       .attr('value', lat)
@@ -120,26 +122,28 @@
         var text;
         var map;
         
-        function setMarkers(map,locations){
+        function setMarkers(map,locations, std){
             var marker, i
             for (i = 0; i < locations.length; i++){
                 var tlat = locations[i][0]
                 var tlong = locations[i][1]
+                var humanReadable;
                 
                 var dt =  new Date(locations[i][2])
+                //alert("dt readable=" + dt)
+                dt = dt.getTime()
+                //alert("dt=" + dt)
                 
-                var date = new Date(); 
+                var date = new Date();
+                //alert("date readable=" + date)
                 var currentTimestamp = date.getTime();
+                //alert("currentTimestamp=" + currentTimestamp)
                 
-                var hourDiff = currentTimestamp - dt; //in ms
-                
-                var minDiff = hourDiff / 60 / 1000; //in minutes
-                var hDiff = hourDiff / 3600 / 1000; //in hours
-                
-                var humanReadable = {};
-                humanReadable.hours = Math.floor(hDiff);
-                humanReadable.minutes = Math.floor(minDiff - 60 * humanReadable.hours);
-                
+                if(std =="C"){
+                    humanReadable = timeDiffChrome(dt, currentTimestamp);
+                }else{
+                    humanReadable = timeDiff(dt, currentTimestamp);
+                }
                 
                 latlngset = new google.maps.LatLng(tlat, tlong);
                 
@@ -150,11 +154,11 @@
                     position: latlngset
                 });
                 map.setCenter(marker.getPosition())
-        
-                var content = humanReadable.hours + "小時" + humanReadable.minutes + "分前有警察！！"
-        
+
+                var content = humanReadable.hours + "小時" + humanReadable.minutes + "分鐘前有警察！！"
+
                 var infowindow = new google.maps.InfoWindow()
-        
+
                 google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
                     return function() {
                         infowindow.setContent(content);
@@ -186,14 +190,14 @@
             
         }
         
-        function initMap() {
+        function initMap(std) {
             var myOptions = {
                 center: new google.maps.LatLng(35.743580, 139.730338),// no effect
                 zoom: 18,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
             map = new google.maps.Map(document.getElementById("googleMap"), myOptions);
-            setMarkers(map, cleaned_locs)
+            setMarkers(map, cleaned_locs, std)
         }
         
     </script>

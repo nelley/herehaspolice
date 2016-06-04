@@ -32,6 +32,7 @@ def home(request):
         today = date.today()
         locs = GeoInfo.objects.filter(datetime_added__contains=today).values_list('lat','lon', 'datetime_added')
         locs_json = json.dumps(list(locs), cls=DjangoJSONEncoder)
+        print(locs_json)
         
         args = {'title' : 'Police Here!!',
                 'locs_json' : locs_json
