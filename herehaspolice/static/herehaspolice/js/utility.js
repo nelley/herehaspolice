@@ -1,11 +1,4 @@
-/*
-    also modified carousel.css
-    original #mainCarousel .carousel .item {height: 450px;background-color: #FFF;}
-*/
-function fullViewPort(root){
-    var windowHeight = window.innerHeight;
-    root.body.style.height = windowHeight + "px";
-}
+
 
 function whichBrowser(){
     // Firefox 1.0+

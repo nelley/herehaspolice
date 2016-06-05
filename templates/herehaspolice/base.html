@@ -25,7 +25,11 @@
 
     <!-- Custom styles for this template -->
     <link href={% static "herehaspolice/css/carousel.css" %} rel="stylesheet">
-    
+    <style>
+    #googleMap {
+        height: 633px;
+    }
+    </style>
   </head>
 <!-- NAVBAR
 ================================================== -->
@@ -47,6 +51,7 @@
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
                 <!--<li class="active"><a href="index.html">首頁</a></li>-->
+                <li><a href="report_error.html">錯誤回報</a></li>
                 <li><a href="about.html">關於我們</a></li>
               </ul>
             </div>
@@ -83,6 +88,10 @@
           
     <script>
         $(document).ready(function(){
+            fullViewPort(this)
+            //var windowHeight = window.innerHeight;
+            //document.body.style.height = windowHeight + "px";
+            
             var std = whichBrowser()
             initMap(std);
             
@@ -155,7 +164,7 @@
                 });
                 map.setCenter(marker.getPosition())
 
-                var content = humanReadable.hours + "小時" + humanReadable.minutes + "分鐘前有警察！！"
+                var content = humanReadable.hours + "小時" + humanReadable.minutes + "分鐘前有警察！"
 
                 var infowindow = new google.maps.InfoWindow()
 
@@ -201,15 +210,13 @@
         }
         
     </script>
-            
-          
-            <div id="googleMap" style="height:450px;"></div>
+            <div id="googleMap"></div>
               <div class="container">
                 <div class="carousel-caption">
                 
                 <form role="form" method="post" id="form">
                     {% csrf_token %}
-                    <a><input class="btn btn-lg btn-danger" role="button" style="font-size:2em" type="submit" value="這裡有警察！！" /></a>
+                    <a><input class="btn btn-lg btn-danger" role="button" style="font-size:2em" type="submit" value="這裡有警察！" /></a>
                 </form>
                   
                 </div>
@@ -218,15 +225,6 @@
           </div>
         </div><!-- /.carousel -->
     </div>
-    
-      <!-- FOOTER 
-      <footer>
-        <div class="container">
-        <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-        </div>
-      </footer>-->
-
-
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

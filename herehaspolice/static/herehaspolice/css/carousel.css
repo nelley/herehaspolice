@@ -122,7 +122,7 @@ a:hover{color:#eee}
 #myCarousel2 .carousel-control.right, #myCarousel2 .carousel-control.left {background: none;color: #057C00;font-size: 3em; width: 6%;}
 .itemsTitle{border-bottom: 1px solid #e7e7e7;padding: 8px 30px;font-size: 20px;text-transform: uppercase;position: relative;margin-bottom: 20px;text-align:center}
 #myCarousel .container{padding:0}
-#mainCarousel .carousel .item {height: 100%;background-color: #FFF;}
+#mainCarousel .carousel .item {height: 450px;background-color: #FFF;}
 footer{padding:18px 0; background:#111; color:#fff;}
 .marketing{padding:28px 0}
 .pageTitle{padding:18px 0; border-top:1px solid #efefef; margin-top:92px; background:#efefef}
