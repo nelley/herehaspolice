@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-06-07 00:27+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: herehaspolice/models.py:8
+msgid "Latitude:"
+msgstr ""
+
+#: herehaspolice/models.py:9
+msgid "Please input Latitude"
+msgstr ""
+
+#: herehaspolice/models.py:11
+msgid "Longitude:"
+msgstr ""
+
+#: herehaspolice/models.py:12
+msgid "Please input Longitude"
+msgstr ""
+
+#: herehaspolice/models.py:17
+msgid "Free command:"
+msgstr ""
+
+#: herehaspolice/models.py:18
+msgid "Please Input Free Command"
+msgstr ""
+
+#: herehaspolice/models.py:20 herehaspolice/models.py:32
+msgid "IP Address:"
+msgstr ""
+
+#: herehaspolice/models.py:21 herehaspolice/models.py:33
+msgid "IP Address"
+msgstr ""
+
+#: herehaspolice/models.py:29
+msgid "Error Report:"
+msgstr ""
+
+#: herehaspolice/models.py:30
+msgid "Error Report"
+msgstr ""
+
+#: herehaspolice/settings.py:112
+msgid "Japanease"
+msgstr ""
+
+#: herehaspolice/settings.py:113
+msgid "Traditional Chinese"
+msgstr ""
+
+#: herehaspolice/views.py:41 herehaspolice/views.py:45
+msgid "thanks for your sharing"
+msgstr "已標示好警察的所在位置！"
+
+#: herehaspolice/views.py:47
+msgid "report too soon to response, please wait 10secs"
+msgstr "不能連續登錄喔,請稍待一會再回報警察的位置"
+
+#: herehaspolice/views.py:49
+msgid "No GPS Info"
+msgstr "沒有GPS位置,所以無法登錄喔. 請打開你的GPS定位！"

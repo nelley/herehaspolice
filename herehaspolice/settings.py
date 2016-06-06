@@ -51,6 +51,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 )
 
 ROOT_URLCONF = 'herehaspolice.urls'
@@ -86,7 +87,7 @@ DATABASES = {
         'NAME': 'namimoch_herehaspolice',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '192.168.43.215',
+        'HOST': '192.168.0.104',
         #'HOST': '192.168.43.215',
         
         #'NAME': 'namimoch_lawyerFinder',
@@ -101,6 +102,21 @@ DATABASES = {
     }
 }
 
+# Internationalization
+# https://docs.djangoproject.com/en/1.8/topics/i18n/
+from django.utils.translation import ugettext_lazy as _
+
+# python manage.py makemessages -l zh-TW(generate xxxx.po file)
+# python manage.py compilemessages(compile xxxx.po to mo file)
+LANGUAGES = [
+    ('ja', _('Japanease')),
+    ('zh-TW', _('Traditional Chinese')),
+]
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -112,7 +128,6 @@ TIME_ZONE = 'Asia/Taipei'
 #TIME_ZONE = 'UTC'
 
 USE_I18N = True
-
 USE_L10N = True
 
 USE_TZ = False

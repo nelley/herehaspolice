@@ -6,7 +6,7 @@ from django.utils import timezone
 class GeoInfo(models.Model):
     
     lat = models.FloatField(verbose_name=_('Latitude:'),
-                                          help_text=_('Please input Latitude'))
+                            help_text=_('Please input Latitude'))
 
     lon = models.FloatField(verbose_name=_('Longitude:'),
                                    help_text=_('Please input Longitude'))
@@ -17,6 +17,9 @@ class GeoInfo(models.Model):
                                 verbose_name=_('Free command:'),
                                 help_text=_('Please Input Free Command'))
     
+    ipaddress = models.GenericIPAddressField(verbose_name=_('IP Address:'),
+                                             help_text=_('IP Address'))
+    
     
 class ErrorReport(models.Model):
     
@@ -25,3 +28,6 @@ class ErrorReport(models.Model):
     errorContent = models.CharField(max_length=40, 
                                 verbose_name=_('Error Report:'),
                                 help_text=_('Error Report'))
+    
+    ipaddress = models.GenericIPAddressField(verbose_name=_('IP Address:'),
+                                             help_text=_('IP Address'))
