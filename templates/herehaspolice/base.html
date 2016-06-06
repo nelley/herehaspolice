@@ -46,13 +46,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="index.html">這裡有警察</a>
+              <a class="navbar-brand" href="{% url 'views.home' %}">這裡有警察</a>
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <!--<li class="active"><a href="index.html">首頁</a></li>-->
-                <li><a href="report_error.html">錯誤回報</a></li>
-                <li><a href="about.html">關於我們</a></li>
+                {% url 'views.home' as home %}
+                {% url 'views.error_report' as error %}
+                {% url 'views.about' as about %}
+                <li {% if request.path == home %} class="active"{% endif %}><a href="{{home}}">定位警察</a></li>
+                <li {% if request.path == error %} class="active"{% endif %}><a href="{{error}}">錯誤回報</a></li>
+                <li {% if request.path == about %} class="active"{% endif %}><a href="{{about}}">關於本站</a></li>
               </ul>
             </div>
           </div>
@@ -61,7 +64,7 @@
       </div>
     </div>
 
-
+{% block content %}
     <!-- Carousel
     ================================================== -->
     <div id="mainCarousel">
@@ -89,8 +92,6 @@
     <script>
         $(document).ready(function(){
             fullViewPort(this)
-            //var windowHeight = window.innerHeight;
-            //document.body.style.height = windowHeight + "px";
             
             var std = whichBrowser()
             initMap(std);
@@ -136,24 +137,8 @@
             for (i = 0; i < locations.length; i++){
                 var tlat = locations[i][0]
                 var tlong = locations[i][1]
-                var humanReadable;
                 
-                var dt =  new Date(locations[i][2])
-                //alert("dt readable=" + dt)
-                dt = dt.getTime()
-                //alert("dt=" + dt)
-                
-                var date = new Date();
-                //alert("date readable=" + date)
-                var currentTimestamp = date.getTime();
-                //alert("currentTimestamp=" + currentTimestamp)
-                
-                if(std =="C"){
-                    humanReadable = timeDiffChrome(dt, currentTimestamp);
-                }else{
-                    humanReadable = timeDiff(dt, currentTimestamp);
-                }
-                
+                var dt =  locations[i][2].split(":")
                 latlngset = new google.maps.LatLng(tlat, tlong);
                 
                 var marker = new google.maps.Marker({
@@ -164,7 +149,7 @@
                 });
                 map.setCenter(marker.getPosition())
 
-                var content = humanReadable.hours + "小時" + humanReadable.minutes + "分鐘前有警察！"
+                var content = parseInt(dt[0]) + "小時" + parseInt(dt[1]) + "分鐘前有警察！"
 
                 var infowindow = new google.maps.InfoWindow()
 
@@ -225,12 +210,12 @@
           </div>
         </div><!-- /.carousel -->
     </div>
-
+{% endblock content %}
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" 
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="{% static "herehaspolice/js/holder.js" %}></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="{% static "herehaspolice/js/holder.js" %}"></script>
   </body>
 </html>

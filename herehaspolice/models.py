@@ -16,3 +16,12 @@ class GeoInfo(models.Model):
     text = models.CharField(max_length=40, 
                                 verbose_name=_('Free command:'),
                                 help_text=_('Please Input Free Command'))
+    
+    
+class ErrorReport(models.Model):
+    
+    reportDT = models.DateTimeField(null=False, default=timezone.now)
+    
+    errorContent = models.CharField(max_length=40, 
+                                verbose_name=_('Error Report:'),
+                                help_text=_('Error Report'))

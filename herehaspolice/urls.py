@@ -20,4 +20,6 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.home , name='home'),
     #url(r'^tmp/', views.tmp , name='tmp'),
+    url(r'^about/', views.about , name='about'),
+    url(r'^report/', views.error_report , name='error_report'),
 ]
