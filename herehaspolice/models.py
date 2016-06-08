@@ -27,7 +27,7 @@ class ErrorReport(models.Model):
     
     errorContent = models.CharField(max_length=40, 
                                 verbose_name=_('Error Report:'),
-                                help_text=_('Error Report'))
+                                help_text=_('Please Input Error Status'))
     
     ipaddress = models.GenericIPAddressField(verbose_name=_('IP Address:'),
                                              help_text=_('IP Address'))

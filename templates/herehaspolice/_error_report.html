@@ -1,19 +1,50 @@
 {% extends "herehaspolice/base.html" %}
 {% load bootstrap3 %}
+{% load i18n %}
 
 
 {% block content %}
 <div class="pageTitle">
-    <div class="container">
-    <h2>錯誤回報</h2>
-    </div>
-    </div>
+    <div class="container"><h2>錯誤回報</h2></div>
+</div>
     
-     <div class="container">
-     <div class="bodyInner">
-            
+<div class="container">
+   <div class="bodyInner">
+       <form role="form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form error_reportform %}
+            <div align=center>{% buttons submit='OK' %}{% endbuttons %}</div>
+        </form>
+        
+        
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>
+                            <div class="col-sm-10">已回報的內容</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for error in errorReports %}
+                    <tr>
+                        <th>{{forloop.counter}}</th>
+                        <th>
+                            <div class="col-sm-10">
+                            {{ error.errorContent }}
+                            </div>
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+        
     </div>
-    </div>
+</div>
 
 
 {% endblock content %}

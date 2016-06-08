@@ -14,6 +14,7 @@ from herehaspolice.models import *
 from django.db import connection
 from django.contrib import messages
 from django.db.models import Max
+from herehaspolice.forms import Error_ReportForm
 
 def home(request):
     args = []
@@ -94,7 +95,30 @@ def about(request):
     
 def error_report(request):
     
-    args = {'title' : 'Police Here!!'}
+    if request.method == 'POST':
+        error_reportform = Error_ReportForm(request.POST)
+        
+        #get ip address
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ipaddress = x_forwarded_for.split(',')[-1].strip()
+        else:
+            ipaddress = request.META.get('REMOTE_ADDR')
+        
+        if error_reportform.is_valid():
+            errorContent = error_reportform.cleaned_data['errorContent']
+            ErrorReport.objects.create(errorContent=errorContent, 
+                                       ipaddress=ipaddress)
+            
+    
+    error_reportform = Error_ReportForm()
+    #get all info from db
+    errorReports = ErrorReport.objects.all().order_by('-reportDT')
+    
+    args = {'title' : 'Police Here!!',
+            'error_reportform' : error_reportform,
+            'errorReports' : errorReports,
+            }
     
     return render_to_response(
         'herehaspolice/_error_report.html',

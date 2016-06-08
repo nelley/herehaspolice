@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-07 00:27+0800\n"
+"POT-Creation-Date: 2016-06-08 10:30+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,11 +51,11 @@ msgstr ""
 
 #: herehaspolice/models.py:29
 msgid "Error Report:"
-msgstr ""
+msgstr "錯誤回報"
 
 #: herehaspolice/models.py:30
-msgid "Error Report"
-msgstr ""
+msgid "Please Input Error Status"
+msgstr "使用上碰到的問題都可以在這邊反應喔"
 
 #: herehaspolice/settings.py:112
 msgid "Japanease"
@@ -65,14 +65,14 @@ msgstr ""
 msgid "Traditional Chinese"
 msgstr ""
 
-#: herehaspolice/views.py:41 herehaspolice/views.py:45
+#: herehaspolice/views.py:42 herehaspolice/views.py:46
 msgid "thanks for your sharing"
 msgstr "已標示好警察的所在位置！"
 
-#: herehaspolice/views.py:47
+#: herehaspolice/views.py:48
 msgid "report too soon to response, please wait 10secs"
 msgstr "不能連續登錄喔,請稍待一會再回報警察的位置"
 
-#: herehaspolice/views.py:49
+#: herehaspolice/views.py:50
 msgid "No GPS Info"
 msgstr "沒有GPS位置,所以無法登錄喔. 請打開你的GPS定位！"
