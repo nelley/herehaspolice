@@ -91,7 +91,9 @@
           
     <script>
         $(document).ready(function(){
-            fullViewPort(this)
+            //fullViewPort(this)
+            var windowHeight = window.innerHeight;
+            this.body.style.height = windowHeight + "px";
             
             var std = whichBrowser()
             initMap(std);
